@@ -40,6 +40,7 @@ public class MainFrame extends JFrame {
         this.setBounds(0,0,600,1000);
         cp=this.getContentPane();
         cp.setLayout(new BorderLayout());
+        this.setTitle("滅蚊行動");
         jpn1.add(jbtnFulscreen);
         jlabPoint.setOpaque(true);
         jlabPoint.setBackground(new Color(184,200, 76));
