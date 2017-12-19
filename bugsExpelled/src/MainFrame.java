@@ -1,9 +1,15 @@
 import org.w3c.dom.css.RGBColor;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.Buffer;
+import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
     private Container cp;
@@ -16,7 +22,8 @@ public class MainFrame extends JFrame {
 
     private JPanel jpn2 = new JPanel();
     private JLabel jlabCeil = new JLabel("");
-    private JLabel jlabHouse = new JLabel("");
+    private JLabel jlabHouse = new JLabel();
+//    private ImagePanel jlabHouse = new ImagePanel();
 
     private JPanel jpn3=new JPanel(new GridLayout(1,5,3,3));
     private JButton jbtnClap =new JButton("");
@@ -30,8 +37,41 @@ public class MainFrame extends JFrame {
     private JButton jbtnfun5 = new JButton("5");
     private Boolean mouse =new Boolean(false);
 
+//    private int  imgW, imgH;
+//    private int fishIndex = 0;
+//    private ArrayList<Fish> fishList=new ArrayList<Fish>();
+//    private ArrayList<Fish2> fishList2=new ArrayList<Fish2>();
+//    private ArrayList<Thread> fishList=new ArrayList<>(Thread);
+
+//    public MainFrame(){
+//        imgW = jlabHouse.getImageWidth();
+//        imgH = jlabHouse.getImageHeight();
+//        this.setBounds(350,100,imgW,imgH);
+//        this.setResizable(false);
+//        jlabHouse.setLayout(null);
+//
+////        //
+////        fishList.add(new   Fish(imgH,imgW));
+////        jlabHouse.add(fishList.get(fishList.size()-1));
+////        threadList.add(new Thread(fishList.get(fishList.size()-1)));
+////        threadList.get(threadList.size()-1).start();
+////        //
+//    }
 
 
+    class ImagePanel extends JPanel{
+        private BufferedImage image;
+        private int imgW,imgH;
+        public ImagePanel(){
+            try{
+                image = ImageIO.read(new File("graphic/house.png"));
+                imgW=image.getWidth();
+                imgH=image.getHeight();
+            }catch (IOException ex){
+                javax.swing.JOptionPane.showMessageDialog(this,"IOException:"+ex.toString());
+            }
+        }
+    }
 
     public MainFrame(){
         initComp();
@@ -131,6 +171,16 @@ public class MainFrame extends JFrame {
         jpn3.add(jbtnfun5);
         cp.add(jpn3,BorderLayout.SOUTH);
 
+//    protected void paintComponent(Graphics g){
+//        super.paintComponent(g);
+//        g.drawImage(image,0,0,null);
+//    }
+//    public int getImgWidth(){
+//        return imgW;
+//    }
+//    public int getImgHeight(){
+//        return imgH;
+//    }
 
     }
 }
