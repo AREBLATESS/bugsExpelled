@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,8 +23,8 @@ public class MainFrame extends JFrame {
 
     private JPanel jpn2 = new JPanel();
     private JLabel jlabCeil = new JLabel("");
-    private JLabel jlabHouse = new JLabel();
-//    private ImagePanel jlabHouse = new ImagePanel();
+//    private JLabel jlabHouse = new JLabel();
+    private ImagePanel jlabHouse = new ImagePanel();
 
     private JPanel jpn3=new JPanel(new GridLayout(1,5,3,3));
     private JButton jbtnClap =new JButton("");
@@ -32,51 +33,74 @@ public class MainFrame extends JFrame {
     private JButton jbtnCatch = new JButton("");
 
 
-    private JButton jbtnFire = new JButton("燒");
+    private JButton jbtnFire = new JButton("");
     private JButton jbtnfun4 = new JButton("4");
     private JButton jbtnfun5 = new JButton("5");
-    private Boolean mouse =new Boolean(false);
+    private Boolean tool =new Boolean(false);
+    private int flag=0;
 
-//    private int  imgW, imgH;
-//    private int fishIndex = 0;
-//    private ArrayList<Fish> fishList=new ArrayList<Fish>();
-//    private ArrayList<Fish2> fishList2=new ArrayList<Fish2>();
-//    private ArrayList<Thread> fishList=new ArrayList<>(Thread);
+    private int  imgW, imgH;
+    private int bugsIndex = 0;
+    private ArrayList<bugs> bugsList=new ArrayList<bugs>();
+//    private ArrayList<bugs2> bugsList2=new ArrayList<bugs2>();
+    private ArrayList<Thread> threadList=new ArrayList<Thread>();
+//    private Timer maintime;
 
 //    public MainFrame(){
-//        imgW = jlabHouse.getImageWidth();
-//        imgH = jlabHouse.getImageHeight();
-//        this.setBounds(350,100,imgW,imgH);
-//        this.setResizable(false);
-//        jlabHouse.setLayout(null);
+
 //
 ////        //
-////        fishList.add(new   Fish(imgH,imgW));
-////        jlabHouse.add(fishList.get(fishList.size()-1));
-////        threadList.add(new Thread(fishList.get(fishList.size()-1)));
+////        bugsList.add(new   bugs(imgH,imgW));
+////        jlabHouse.add(bugsList.get(bugsList.size()-1));
+////        threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
 ////        threadList.get(threadList.size()-1).start();
 ////        //
 //    }
 
 
-    class ImagePanel extends JPanel{
-        private BufferedImage image;
-        private int imgW,imgH;
-        public ImagePanel(){
-            try{
-                image = ImageIO.read(new File("graphic/house.png"));
-                imgW=image.getWidth();
-                imgH=image.getHeight();
-            }catch (IOException ex){
-                javax.swing.JOptionPane.showMessageDialog(this,"IOException:"+ex.toString());
-            }
-        }
-    }
+//    public void mousePressed(MouseEvent e){
+//        //實做滑鼠的點擊事件
+//        Graphics g = getGraphics();
+//        int x = e.getX();
+//        int y = e.getY();
+//        bugs.setIcon(imgeB);
+////        g.drawImage("graphic/blood.png",x,y,null);
+//    }
+
 
     public MainFrame(){
         initComp();
     }
     private void initComp(){
+        //
+        imgW = jlabHouse.getImgWidth();
+        imgH = jlabHouse.getImgHeight();
+        this.setBounds(350,100,imgW,imgH);
+        this.setResizable(true);  //視窗放大縮小
+        jlabHouse.setLayout(null);
+
+
+//        maintime= new Timer(8000, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                bugsList.add(new   bugs(imgH,imgW));
+//                jlabHouse.add(bugsList.get(bugsList.size()-1));
+//                threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
+//                threadList.get(threadList.size()-1).start();
+////                maintime.start();
+//            }
+//        });
+        //
+        jbtnfun4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bugsList.add(new   bugs(imgH,imgW));
+                jlabHouse.add(bugsList.get(bugsList.size()-1));
+                threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
+                threadList.get(threadList.size()-1).start();
+            }
+        });
+
         this.setBounds(0,0,600,1000);
         cp=this.getContentPane();
         cp.setLayout(new BorderLayout());
@@ -104,15 +128,16 @@ public class MainFrame extends JFrame {
         jlabCeil.setHorizontalAlignment(jlabCeil.CENTER);
         jpn2.add(jlabCeil,BorderLayout.NORTH);
 
-        ImageIcon iconHouse = new ImageIcon("graphic/house.jpg");
-        Image imgH;
-        imgH = iconHouse.getImage();
-        imgH = imgH.getScaledInstance(600,700,Image.SCALE_DEFAULT);
-        iconHouse = new ImageIcon(imgH);
-        jlabHouse.setIcon(iconHouse);
-        jlabHouse.setOpaque(true);
-        jlabHouse.setBackground(Color.YELLOW);
-        jlabHouse.setHorizontalAlignment(jlabHouse.CENTER);
+//        ImageIcon iconHouse = new ImageIcon("graphic/house.jpg");
+//        Image imgH;
+//        imgH = iconHouse.getImage();
+//        imgH = imgH.getScaledInstance(600,700,Image.SCALE_DEFAULT);
+//        iconHouse = new ImageIcon(imgH);
+//        jlabHouse.setIcon(iconHouse);
+//        jlabHouse.setOpaque(true);
+//        jlabHouse.setBackground(Color.YELLOW);
+//        jlabHouse.setHorizontalAlignment(jlabHouse.CENTER);
+
         jpn2.add(jlabHouse,BorderLayout.CENTER);
         cp.add(jpn2,BorderLayout.CENTER);
 
@@ -127,13 +152,14 @@ public class MainFrame extends JFrame {
         jbtnClap.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(mouse ==false){
+                if(tool ==false){
                     jbtnClap.setEnabled(false);
                 }else{
                     jbtnCatch.setEnabled(true);
                     jbtnClap.setEnabled(false);
                 }
-                mouse =true;
+                tool = true;
+                flag = 1;
                 ImageIcon imgClap = new ImageIcon("graphic/clap.png");
 
 
@@ -152,35 +178,60 @@ public class MainFrame extends JFrame {
         jbtnCatch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(mouse == false){
+                if(tool == false){
                     jbtnCatch.setEnabled(false);
                 }else{
                     jbtnClap.setEnabled(true);
                     jbtnCatch.setEnabled(false);
                 }
-                    mouse =true;
+                    tool = true;
+                    flag = 2;
                 ImageIcon imgCatch = new ImageIcon("graphic/catch.png");
                 Cursor cr = Toolkit.getDefaultToolkit().createCustomCursor(imgCatch.getImage(), new Point(0,0) ,"MyCursor" );
 
                 cp.setCursor(cr);
             }
         });
+        //火燒
+        ImageIcon iconfire = new ImageIcon("graphic/fire.png");
+        Image imgT3;
+        imgT3=iconfire.getImage();
+        imgT3=imgT3.getScaledInstance(100,150,Image.SCALE_DEFAULT);
+        iconfire=new ImageIcon(imgT3);
+        jbtnFire.setIcon(iconfire);
+        //
 
         jpn3.add(jbtnFire);
         jpn3.add(jbtnfun4);
         jpn3.add(jbtnfun5);
         cp.add(jpn3,BorderLayout.SOUTH);
 
-//    protected void paintComponent(Graphics g){
-//        super.paintComponent(g);
-//        g.drawImage(image,0,0,null);
-//    }
-//    public int getImgWidth(){
-//        return imgW;
-//    }
-//    public int getImgHeight(){
-//        return imgH;
-//    }
+    }
+
+    class ImagePanel extends JPanel{
+        private BufferedImage image;
+        private int imgW,imgH;
+        public ImagePanel(){
+            try{
+                image = ImageIO.read(new File("graphic/house.jpg"));
+                imgW=image.getWidth();
+                imgH=image.getHeight();
+            }catch (IOException ex){
+                javax.swing.JOptionPane.showMessageDialog(this,"IOException:"+ex.toString());
+            }
+        }
+
+
+    protected void paintComponent(Graphics g){
+        super.paintComponent(g);
+        g.drawImage(image,0,0,null);
+    }
+    public int getImgWidth(){
+        return imgW;
+    }
+    public int getImgHeight(){
+        return imgH;
+    }
 
     }
 }
