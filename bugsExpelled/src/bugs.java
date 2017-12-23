@@ -7,7 +7,10 @@ import java.util.Random;
 
 public class bugs extends JLabel implements Runnable {
     private int frmW, frmH, x, y, r1 ,r;
-    private ImageIcon[][] imgIcon = {{new ImageIcon("graphic/f11.png"),new ImageIcon("graphic/f21.png"),new ImageIcon("graphic/f31.png")},{new ImageIcon("graphic/f1.png"),new ImageIcon("graphic/f2.png"),new ImageIcon("graphic/f3.png")}};
+    private ImageIcon[][] imgIcon = {{new ImageIcon("graphic/f11.png"),
+            new ImageIcon("graphic/f21.png"),new ImageIcon("graphic/f31.png")},
+            {new ImageIcon("graphic/f1.png"),new ImageIcon("graphic/f2.png"),
+                    new ImageIcon("graphic/f3.png")}};
     private boolean dirFrag = true;
     private Timer t1;
     private Random rand = new Random();
