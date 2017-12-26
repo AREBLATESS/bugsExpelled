@@ -23,44 +23,45 @@ public class bugs extends JLabel implements Runnable {
         }
         this.setIcon(imgIcon[r][r=rand.nextInt(3)]);  //要改
         this.setBounds(x,y,this.getIcon().getIconWidth(),this.getIcon().getIconHeight());
-//        this.addMouseListener(new MouseListener() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-////                    frm.setSelectedBug(true);
-//            }
-//            @Override
-//            public void mousePressed(MouseEvent e) { }
-//            @Override
-//            public void mouseReleased(MouseEvent e) { }
-//            @Override
-//            public void mouseEntered(MouseEvent e) { }
-//            @Override
-//            public void mouseExited(MouseEvent e) { }
-//        });
-
-        this.addMouseListener(new MouseAdapter() {
+        this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                ImageIcon imgB =new ImageIcon("graphic/blood.png");
-                bugs.this.setIcon(imgB);
-                isContinue=false;  //測試中
-                //程式的小睡
-//                try {
-//                    Thread.sleep(9999);
-//                }
-//                catch(InterruptedException out) {
-//                    System.out.println("I am interrupted....");
-//                }
+//                    frm.setSelectedBug(bugs.this);
             }
+            @Override
+            public void mousePressed(MouseEvent e) { }
+            @Override
+            public void mouseReleased(MouseEvent e) { }
+            @Override
+            public void mouseEntered(MouseEvent e) { }
+            @Override
+            public void mouseExited(MouseEvent e) { }
         });
+
+//        this.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                super.mouseClicked(e);
+//                ImageIcon imgB =new ImageIcon("graphic/blood.png");
+//                bugs.this.setIcon(imgB);
+//                bugs.this.setSleep();
+//                isContinue=false;  //測試中
+//                //程式的小睡
+////                try {
+////                    Thread.sleep(9999);
+////                }
+////                catch(InterruptedException out) {
+////                    System.out.println("I am interrupted....");
+////                }
+//            }
+//        });
     }
     public void run(){
 
             t1 = new Timer(rand.nextInt(1000 + 50), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-//                    while (isContinue = true) {
+//                    while (isContinue == true) {
                         if (bugs.this.dirFrag) {
                             if ((x - 10) > 0) {
                                 x -= 10;
@@ -89,5 +90,13 @@ public class bugs extends JLabel implements Runnable {
             });
             t1.start();
         }
+    public void setSleep(){
+        try {
+            Thread.sleep(1500);
+        }
+        catch(InterruptedException out) {
+            System.out.println("I am interrupted....");
+        }
+    }
 
 }

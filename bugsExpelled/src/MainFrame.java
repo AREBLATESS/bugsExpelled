@@ -3,10 +3,7 @@ import org.w3c.dom.css.RGBColor;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +16,7 @@ public class MainFrame extends JFrame {
     private JPanel jpn1 = new JPanel();
     private JButton jbtnFulscreen =new JButton("全銀幕");
     private JLabel jlabPoint = new JLabel("0");
+//    private int Score =0;
     String data[]={"蚊種圖鑑","積分欄列","特殊成就","開發名單"};
     private JComboBox jcb = new JComboBox(data);
 
@@ -103,12 +101,31 @@ public class MainFrame extends JFrame {
                 threadList.get(threadList.size()-1).start();
             }
         });
+//        ///
+//        jlabHouse.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                super.mouseClicked(e);
+//                ImageIcon imgB =new ImageIcon("graphic/blood.png");
+//                bugs.this.setIcon(imgB);
+////                isContinue=false;  //測試中
+//                //程式的小睡
+////                try {
+////                    Thread.sleep(9999);
+////                }
+////                catch(InterruptedException out) {
+////                    System.out.println("I am interrupted....");
+////                }
+//            }
+//        });
+        ///
 
         this.setBounds(0,0,600,1000);
         cp=this.getContentPane();
         cp.setLayout(new BorderLayout());
         this.setTitle("滅蚊行動");
         jpn1.add(jbtnFulscreen);
+
         jlabPoint.setOpaque(true);
         jlabPoint.setBackground(new Color(184,200, 76));
         jlabPoint.setPreferredSize(new Dimension(400,30));
