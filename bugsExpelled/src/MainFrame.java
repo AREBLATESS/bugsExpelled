@@ -95,7 +95,7 @@ public class MainFrame extends JFrame {
         jbtnfun4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bugsList.add(new   bugs(MainFrame.this,imgH,imgW));
+                bugsList.add(new   bugs(MainFrame.this,imgH+200,imgW));
                 jlabHouse.add(bugsList.get(bugsList.size()-1));
                 threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
                 threadList.get(threadList.size()-1).start();
@@ -189,6 +189,33 @@ public class MainFrame extends JFrame {
 //
 //            }
 //        });
+        jlabHouse.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                selectedBug.setSleep();
+                selectedBugFlag = false;
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
         jpn2.add(jlabHouse,BorderLayout.CENTER);
         cp.add(jpn2,BorderLayout.CENTER);
@@ -251,6 +278,12 @@ public class MainFrame extends JFrame {
         imgT3=imgT3.getScaledInstance(100,150,Image.SCALE_DEFAULT);
         iconfire=new ImageIcon(imgT3);
         jbtnFire.setIcon(iconfire);
+        jbtnFire.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent fire) {
+                selectedBug.setFreeze();
+            }
+        });
         //
 
         jpn3.add(jbtnFire);
@@ -283,7 +316,8 @@ public class MainFrame extends JFrame {
     }
     public int getImgHeight(){ return imgH; }
     //影片中
-    public void setSelectedBug(bugs bug1){ selectedBug = bug1; selectedBugFlag= true; }
-
+    }
+    public void setSelectedBug(bugs bug1){
+        selectedBug = bug1; selectedBugFlag= true;
     }
 }

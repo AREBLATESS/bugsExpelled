@@ -10,9 +10,11 @@ public class bugs extends JLabel implements Runnable {
                     new ImageIcon("graphic/f3.png")}};
     private boolean isContinue = true;
     private boolean dirFrag = true;
+    private MainFrame frm;
     private Timer t1;
     private Random rand = new Random();
     public bugs(MainFrame frm,int frmH,int frmW){
+        this.frm=frm;
         this.frmH =frmH;
         this.frmW= frmW;
         x=rand.nextInt(frmW-100);
@@ -25,17 +27,17 @@ public class bugs extends JLabel implements Runnable {
         this.setBounds(x,y,this.getIcon().getIconWidth(),this.getIcon().getIconHeight());
         this.addMouseListener(new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-//                    frm.setSelectedBug(bugs.this);
+            public void mouseClicked(MouseEvent oo) {
+                    bugs.this.frm.setSelectedBug(bugs.this);
             }
             @Override
-            public void mousePressed(MouseEvent e) { }
+            public void mousePressed(MouseEvent oo) { }
             @Override
-            public void mouseReleased(MouseEvent e) { }
+            public void mouseReleased(MouseEvent oo) { }
             @Override
-            public void mouseEntered(MouseEvent e) { }
+            public void mouseEntered(MouseEvent oo) { }
             @Override
-            public void mouseExited(MouseEvent e) { }
+            public void mouseExited(MouseEvent oo) { }
         });
 
 //        this.addMouseListener(new MouseAdapter() {
@@ -90,9 +92,22 @@ public class bugs extends JLabel implements Runnable {
             });
             t1.start();
         }
+
+        public void setFreeze(){
+            try {
+                Thread.sleep(3000);
+            }
+            catch(InterruptedException out) {
+                System.out.println("I am interrupted....");
+            }
+        }
+
     public void setSleep(){
         try {
+            ImageIcon imgB =new ImageIcon("graphic/blood.png");
+            bugs.this.setIcon(imgB);
             Thread.sleep(1500);
+            t1.stop();
         }
         catch(InterruptedException out) {
             System.out.println("I am interrupted....");
