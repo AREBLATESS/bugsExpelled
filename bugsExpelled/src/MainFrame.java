@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +39,8 @@ public class MainFrame extends JFrame {
     private JButton jbtnfun5 = new JButton("5");
     private Boolean tool =new Boolean(false);
     private int flag=0;
+    private bugs selectedBug;
+    private boolean selectedBugFlag = false;
 
     private int  imgW, imgH;
     private int bugsIndex = 0;
@@ -94,7 +97,7 @@ public class MainFrame extends JFrame {
         jbtnfun4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bugsList.add(new   bugs(imgH,imgW));
+                bugsList.add(new   bugs(MainFrame.this,imgH,imgW));
                 jlabHouse.add(bugsList.get(bugsList.size()-1));
                 threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
                 threadList.get(threadList.size()-1).start();
@@ -137,6 +140,38 @@ public class MainFrame extends JFrame {
 //        jlabHouse.setOpaque(true);
 //        jlabHouse.setBackground(Color.YELLOW);
 //        jlabHouse.setHorizontalAlignment(jlabHouse.CENTER);
+////測試中
+//        jlabHouse.addMouseListener(new MouseListener() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                if(selectedBugFlag){
+//                    ImageIcon imgB =new ImageIcon("graphic/blood.png");
+//                    bugs.this.setIcon(imgB);
+//
+//                    selectedBugFlag = false;
+//                }
+//            }
+//
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void mouseReleased(MouseEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void mouseEntered(MouseEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void mouseExited(MouseEvent e) {
+//
+//            }
+//        });
 
         jpn2.add(jlabHouse,BorderLayout.CENTER);
         cp.add(jpn2,BorderLayout.CENTER);
@@ -229,9 +264,9 @@ public class MainFrame extends JFrame {
     public int getImgWidth(){
         return imgW;
     }
-    public int getImgHeight(){
-        return imgH;
-    }
+    public int getImgHeight(){ return imgH; }
+    //影片中
+    public void setSelectedBug(bugs bug1){ selectedBug = bug1; selectedBugFlag= true; }
 
     }
 }
