@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.Buffer;
 import java.util.ArrayList;
 
+
 public class MainFrame extends JFrame {
     private Container cp;
 
@@ -65,7 +66,7 @@ public class MainFrame extends JFrame {
 //        int x = e.getX();
 //        int y = e.getY();
 //        bugs.setIcon(imgeB);
-////        g.drawImage("graphic/blood.png",x,y,null);
+//        g.drawImage("graphic/blood.png",x,y,null);
 //    }
 
 
@@ -80,18 +81,6 @@ public class MainFrame extends JFrame {
         this.setResizable(true);  //視窗放大縮小
         jlabHouse.setLayout(null);
 
-
-//        maintime= new Timer(8000, new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                bugsList.add(new   bugs(imgH,imgW));
-//                jlabHouse.add(bugsList.get(bugsList.size()-1));
-//                threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
-//                threadList.get(threadList.size()-1).start();
-////                maintime.start();
-//            }
-//        });
-        //
         jbtnfun4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -101,25 +90,6 @@ public class MainFrame extends JFrame {
                 threadList.get(threadList.size()-1).start();
             }
         });
-//        ///
-//        jlabHouse.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                super.mouseClicked(e);
-//                ImageIcon imgB =new ImageIcon("graphic/blood.png");
-//                bugs.this.setIcon(imgB);
-////                isContinue=false;  //測試中
-//                //程式的小睡
-////                try {
-////                    Thread.sleep(9999);
-////                }
-////                catch(InterruptedException out) {
-////                    System.out.println("I am interrupted....");
-////                }
-//            }
-//        });
-        ///
-
         this.setBounds(0,0,600,1000);
         cp=this.getContentPane();
         cp.setLayout(new BorderLayout());
@@ -147,75 +117,6 @@ public class MainFrame extends JFrame {
         jlabCeil.setPreferredSize(new Dimension(0,100));
         jlabCeil.setHorizontalAlignment(jlabCeil.CENTER);
         jpn2.add(jlabCeil,BorderLayout.NORTH);
-
-//        ImageIcon iconHouse = new ImageIcon("graphic/house.jpg");
-//        Image imgH;
-//        imgH = iconHouse.getImage();
-//        imgH = imgH.getScaledInstance(600,700,Image.SCALE_DEFAULT);
-//        iconHouse = new ImageIcon(imgH);
-//        jlabHouse.setIcon(iconHouse);
-//        jlabHouse.setOpaque(true);
-//        jlabHouse.setBackground(Color.YELLOW);
-//        jlabHouse.setHorizontalAlignment(jlabHouse.CENTER);
-////測試中
-//        jlabHouse.addMouseListener(new MouseListener() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                if(selectedBugFlag){
-//                    ImageIcon imgB =new ImageIcon("graphic/blood.png");
-//                    bugs.this.setIcon(imgB);
-//
-//                    selectedBugFlag = false;
-//                }
-//            }
-//
-//            @Override
-//            public void mousePressed(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mouseReleased(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mouseEntered(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mouseExited(MouseEvent e) {
-//
-//            }
-//        });
-        jlabHouse.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                selectedBug.setSleep();
-                selectedBugFlag = false;
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
 
         jpn2.add(jlabHouse,BorderLayout.CENTER);
         cp.add(jpn2,BorderLayout.CENTER);
@@ -263,8 +164,8 @@ public class MainFrame extends JFrame {
                     jbtnClap.setEnabled(true);
                     jbtnCatch.setEnabled(false);
                 }
-                    tool = true;
-                    flag = 2;
+                tool = true;
+                flag = 2;
                 ImageIcon imgCatch = new ImageIcon("graphic/catch.png");
                 Cursor cr = Toolkit.getDefaultToolkit().createCustomCursor(imgCatch.getImage(), new Point(0,0) ,"MyCursor" );
 
@@ -281,7 +182,14 @@ public class MainFrame extends JFrame {
         jbtnFire.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent fire) {
-                selectedBug.setFreeze();
+//                bugsList.remove(new   bugs(MainFrame.this,imgH+200,imgW));
+                jlabHouse.remove(bugsList.get(bugsList.size()-1));
+//                ImageIcon imgB =new ImageIcon("graphic/blood.png");
+//                bugsList.get(bugsList.size()-1).setIcon(imgB);
+                threadList.remove(new Thread(bugsList.get(bugsList.size()-1)));
+
+
+//                selectedBug.setFreeze();
             }
         });
         //
@@ -291,7 +199,111 @@ public class MainFrame extends JFrame {
         jpn3.add(jbtnfun5);
         cp.add(jpn3,BorderLayout.SOUTH);
 
+
+//        maintime= new Timer(8000, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                bugsList.add(new   bugs(imgH,imgW));
+//                jlabHouse.add(bugsList.get(bugsList.size()-1));
+//                threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
+//                threadList.get(threadList.size()-1).start();
+////                maintime.start();
+//            }
+//        });
+        //
+
+//        ///
+//        jlabHouse.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                super.mouseClicked(e);
+//                ImageIcon imgB =new ImageIcon("graphic/blood.png");
+//                bugs.this.setIcon(imgB);
+////                isContinue=false;  //測試中
+//                //程式的小睡
+////                try {
+////                    Thread.sleep(9999);
+////                }
+////                catch(InterruptedException out) {
+////                    System.out.println("I am interrupted....");
+////                }
+//            }
+//        });
+        ///
+
+
+
+//        ImageIcon iconHouse = new ImageIcon("graphic/house.jpg");
+//        Image imgH;
+//        imgH = iconHouse.getImage();
+//        imgH = imgH.getScaledInstance(600,700,Image.SCALE_DEFAULT);
+//        iconHouse = new ImageIcon(imgH);
+//        jlabHouse.setIcon(iconHouse);
+//        jlabHouse.setOpaque(true);
+//        jlabHouse.setBackground(Color.YELLOW);
+//        jlabHouse.setHorizontalAlignment(jlabHouse.CENTER);
+////測試中
+        jlabHouse.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+//                if(selectedBugFlag){
+                    ImageIcon imgB =new ImageIcon("graphic/blood.png");
+//                    bugs.this.setSleep();
+                    threadList.remove(this);
+                    selectedBugFlag = false;
+//                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+//        jlabHouse.addMouseListener(new MouseListener() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                selectedBug.setSleep();
+//                selectedBugFlag = false;
+//            }
+//
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void mouseReleased(MouseEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void mouseEntered(MouseEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void mouseExited(MouseEvent e) {
+//
+//            }
+//        });
+
     }
+
 
     class ImagePanel extends JPanel{
         private BufferedImage image;
