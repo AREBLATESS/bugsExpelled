@@ -323,7 +323,7 @@ public class MainFrame extends JFrame {
         private int imgW,imgH;
         public ImagePanel(){
             try{
-                image = ImageIO.read(new File("graphic/house.jpg"));
+                image = ImageIO.read(new File("graphic/house.png"));
                 imgW=image.getWidth();
                 imgH=image.getHeight();
             }catch (IOException ex){
