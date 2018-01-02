@@ -3,7 +3,7 @@ import java.awt.event.*;
 import java.util.Random;
 
 public class bugs extends JLabel implements Runnable {
-    private int frmW, frmH, x, y, r1 ,r,score;
+    private int frmW, frmH, x, y, r1 ,r;
     private ImageIcon[][] imgIcon = {{new ImageIcon("graphic/f11.png"),
             new ImageIcon("graphic/f21.png"),new ImageIcon("graphic/f31.png")},
             {new ImageIcon("graphic/f1.png"),new ImageIcon("graphic/f2.png"),
@@ -14,7 +14,9 @@ public class bugs extends JLabel implements Runnable {
     private MainFrame frm;
     private Timer t1;
     private Random rand = new Random();
-    public bugs(MainFrame frm,int frmH,int frmW){
+    private MainFrame mf;
+    public bugs(MainFrame frm,int frmH,int frmW,MainFrame mf){
+        this.mf=mf;
         this.frm=frm;
         this.frmH =frmH;
         this.frmW= frmW;
@@ -49,7 +51,7 @@ public class bugs extends JLabel implements Runnable {
                 ImageIcon imgB =new ImageIcon("graphic/blood.png");
                 bugs.this.setIcon(imgB);
                 bugs.this.setSleep();
-                score+=1;
+                addScore();
 //                isContinue=false;  //測試中
                 //程式的小睡
 //                try {
@@ -127,13 +129,22 @@ public class bugs extends JLabel implements Runnable {
         try {
             ImageIcon imgB =new ImageIcon("graphic/blood.png");
             bugs.this.setIcon(imgB);
+
             Thread.sleep(10);
+
             t1.stop();
         }
         catch(InterruptedException out) {
             System.out.println("I am interrupted....");
         }
     }
+    public void addScore(){
+        mf.setScore(mf.getScore()+1);
+        mf.getJlbPoint().setText(Integer.toString(mf.getScore()));
+    }
 
+//    public int getScore(){
+//        return score;
+//    }
 
 }

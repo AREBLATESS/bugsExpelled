@@ -13,12 +13,12 @@ import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
     private Container cp;
+//    private bugs b = new bugs();
 
     private JPanel jpn1 = new JPanel();
     private JButton jbtnFulscreen =new JButton("全銀幕");
-    private JLabel jlabPoint = new JLabel("0");
-
-//    private int Score =0;
+    private int score =0;
+    private JLabel jlabPoint = new JLabel(Integer.toString(score));
     String data[]={"蚊種圖鑑","積分欄列","特殊成就","開發名單"};
     private JComboBox jcb = new JComboBox(data);
 
@@ -36,12 +36,14 @@ public class MainFrame extends JFrame {
 
     private JButton jbtnFire = new JButton("");
     private JButton jbtnfun4 = new JButton("4");
-    int f4=0;
+    public int f4=0;
     private JButton jbtnfun5 = new JButton("5");
     private Boolean tool =new Boolean(false);
     private int flag=0;
     private bugs selectedBug;
     private boolean selectedBugFlag = false;
+
+
 
     private int  imgW, imgH;
     private int bugsIndex = 0;
@@ -80,17 +82,27 @@ public class MainFrame extends JFrame {
         imgW = jlabHouse.getImgWidth();
         imgH = jlabHouse.getImgHeight();
         this.setBounds(350,100,imgW,imgH);
-        this.setResizable(true);  //視窗放大縮小
+        this.setResizable(false);  //視窗放大縮小
         jlabHouse.setLayout(null);
 
         jbtnfun4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bugsList.add(new   bugs(MainFrame.this,imgH+200,imgW));
-                jlabHouse.add(bugsList.get(bugsList.size()-1));
-                threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
-                threadList.get(threadList.size()-1).start();
-                f4 ++;
+                if(f4<=10){
+                    bugsList.add(new   bugs(MainFrame.this,imgH+200,imgW,MainFrame.this));
+                    jlabHouse.add(bugsList.get(bugsList.size()-1));
+                    threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
+                    threadList.get(threadList.size()-1).start();
+                    f4 ++;
+                }else{
+                    JOptionPane.showMessageDialog(null,"you lose");
+                    for(int i=1;i<f4+1;i++){
+                        jlabHouse.remove(bugsList.get(bugsList.size()-i));
+                        threadList.remove(new Thread(bugsList.get(bugsList.size()-i)));
+                        jlabHouse.repaint();
+                    }
+                    f4=0;
+                }
             }
         });
         this.setBounds(0,0,600,1000);
@@ -102,6 +114,9 @@ public class MainFrame extends JFrame {
         jlabPoint.setOpaque(true);
         jlabPoint.setBackground(new Color(184,200, 76));
         jlabPoint.setPreferredSize(new Dimension(400,30));
+
+//        jlabPoint.setText(Integer.toString(new bugs(MainFrame.this,imgH+200,imgW).getScore()));
+
         jpn1.add(jlabPoint);
         jpn1.add(jcb);
         cp.add(jpn1,BorderLayout.NORTH);
@@ -203,7 +218,9 @@ public class MainFrame extends JFrame {
                     jlabHouse.remove(bugsList.get(bugsList.size()-i));
                     threadList.remove(new Thread(bugsList.get(bugsList.size()-i)));
                     jlabHouse.repaint();
+
                 }
+                f4=0;
             }
         });
 
@@ -344,5 +361,14 @@ public class MainFrame extends JFrame {
     }
     public void setSelectedBug(bugs bug1){
         selectedBug = bug1; selectedBugFlag= true;
+    }
+    public int getScore(){
+        return score;
+    }
+    public void setScore(int score1){
+       this.score=score1;
+    }
+    public JLabel getJlbPoint(){
+        return jlabPoint;
     }
 }
