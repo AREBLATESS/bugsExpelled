@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.Buffer;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 
 public class MainFrame extends JFrame {
@@ -36,13 +37,25 @@ public class MainFrame extends JFrame {
 
     private JButton jbtnFire = new JButton("");
     private JButton jbtnfun4 = new JButton("4");
-    public int f4=0;
+    public int flyList=0;
+    public int fly =0;
     private JButton jbtnfun5 = new JButton("5");
     private Boolean tool =new Boolean(false);
     private int flag=0;
     private bugs selectedBug;
     private boolean selectedBugFlag = false;
-
+    java.util.Timer tMain = new java.util.Timer(true);
+    TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+            bugsList.add(new   bugs(MainFrame.this,imgH+200,imgW,MainFrame.this));
+            jlabHouse.add(bugsList.get(bugsList.size()-1));
+            threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
+            threadList.get(threadList.size()-1).start();
+            flyList ++;
+            fly++;
+        }
+    };
 
 
     private int  imgW, imgH;
@@ -85,23 +98,29 @@ public class MainFrame extends JFrame {
         this.setResizable(false);  //視窗放大縮小
         jlabHouse.setLayout(null);
 
+
+        tMain.schedule(task,1000,8000);
+
+
         jbtnfun4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(f4<=10){
+                if(fly<=10){
                     bugsList.add(new   bugs(MainFrame.this,imgH+200,imgW,MainFrame.this));
                     jlabHouse.add(bugsList.get(bugsList.size()-1));
                     threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
                     threadList.get(threadList.size()-1).start();
-                    f4 ++;
+                    flyList ++;
+                    fly++;
                 }else{
                     JOptionPane.showMessageDialog(null,"you lose");
-                    for(int i=1;i<f4+1;i++){
+                    for(int i=1;i<flyList+1;i++){
                         jlabHouse.remove(bugsList.get(bugsList.size()-i));
                         threadList.remove(new Thread(bugsList.get(bugsList.size()-i)));
                         jlabHouse.repaint();
                     }
-                    f4=0;
+                    flyList=0;
+                    fly=0;
                 }
             }
         });
@@ -214,13 +233,14 @@ public class MainFrame extends JFrame {
         jbtnfun5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for(int i=1;i<f4+1;i++){
+                for(int i=1;i<flyList+1;i++){
                     jlabHouse.remove(bugsList.get(bugsList.size()-i));
                     threadList.remove(new Thread(bugsList.get(bugsList.size()-i)));
                     jlabHouse.repaint();
 
                 }
-                f4=0;
+                flyList=0;
+                fly=0;
             }
         });
 
@@ -368,6 +388,10 @@ public class MainFrame extends JFrame {
     public void setScore(int score1){
        this.score=score1;
     }
+
+    public int getfly(){ return fly;}
+    public void setfly(int fly1){this.fly=fly1;}
+
     public JLabel getJlbPoint(){
         return jlabPoint;
     }

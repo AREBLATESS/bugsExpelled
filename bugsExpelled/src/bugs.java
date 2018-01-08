@@ -15,6 +15,7 @@ public class bugs extends JLabel implements Runnable {
     private Timer t1;
     private Random rand = new Random();
     private MainFrame mf;
+    private boolean mouseListenerIsActive = true;
     public bugs(MainFrame frm,int frmH,int frmW,MainFrame mf){
         this.mf=mf;
         this.frm=frm;
@@ -32,7 +33,6 @@ public class bugs extends JLabel implements Runnable {
             @Override
             public void mouseClicked(MouseEvent oo) {
                     bugs.this.frm.setSelectedBug(bugs.this);
-
             }
             @Override
             public void mousePressed(MouseEvent oo) { }
@@ -48,10 +48,14 @@ public class bugs extends JLabel implements Runnable {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                ImageIcon imgB =new ImageIcon("graphic/blood.png");
-                bugs.this.setIcon(imgB);
+//                ImageIcon imgB =new ImageIcon("graphic/blood.png");
+//                bugs.this.setIcon(imgB);
                 bugs.this.setSleep();
-                addScore();
+                if(mouseListenerIsActive) {
+                    addScore();
+                    minFly();
+                }
+                mouseListenerIsActive=false;
 //                isContinue=false;  //測試中
                 //程式的小睡
 //                try {
@@ -130,6 +134,7 @@ public class bugs extends JLabel implements Runnable {
             ImageIcon imgB =new ImageIcon("graphic/blood.png");
             bugs.this.setIcon(imgB);
 
+
             Thread.sleep(10);
 
             t1.stop();
@@ -143,8 +148,14 @@ public class bugs extends JLabel implements Runnable {
         mf.getJlbPoint().setText(Integer.toString(mf.getScore()));
     }
 
+    public void minFly(){
+        mf.setfly(mf.getfly()-1);
+    }
 //    public int getScore(){
 //        return score;
 //    }
-
+//    public void stopMouseListner () {
+//        mouseListenerIsActive = false;
+//    }
 }
+
