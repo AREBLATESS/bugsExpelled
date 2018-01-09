@@ -3,7 +3,7 @@ import java.awt.event.*;
 import java.util.Random;
 
 public class bugs extends JLabel implements Runnable {
-    private int frmW, frmH, x, y, r1 ,r;
+    private int frmW, frmH, x, y, r1 ,r ;
     private ImageIcon[][] imgIcon = {{new ImageIcon("graphic/f11.png"),
             new ImageIcon("graphic/f21.png"),new ImageIcon("graphic/f31.png")},
             {new ImageIcon("graphic/f1.png"),new ImageIcon("graphic/f2.png"),
@@ -27,7 +27,23 @@ public class bugs extends JLabel implements Runnable {
         if(r==1){
             this.dirFrag= false;
         }
-        this.setIcon(imgIcon[r][r1=rand.nextInt(3)]);  //要改
+        if(mf.getScore()<=10) {
+            this.setIcon(imgIcon[r][r1 = rand.nextInt(1)]);  //要改
+        }else if(mf.getScore()<=20){
+            if(mf.getScore()==11){
+                JOptionPane.showMessageDialog(null,"here comes red mosqitos");
+                mf.setScore(mf.getScore()+1);
+                bugs.this.setFreeze();
+            }
+            this.setIcon(imgIcon[r][r1 = rand.nextInt(2)]);
+        }else if (mf.getScore()>20){
+            if(mf.getScore()==21){
+                JOptionPane.showMessageDialog(null,"here comes the giant mosqitos");
+                mf.setScore(mf.getScore()+1);
+                bugs.this.setFreeze();
+            }
+            this.setIcon(imgIcon[r][r1 = rand.nextInt(3)]);
+        }
         this.setBounds(x,y,this.getIcon().getIconWidth(),this.getIcon().getIconHeight());
         this.addMouseListener(new MouseListener() {
             @Override
@@ -54,6 +70,7 @@ public class bugs extends JLabel implements Runnable {
                 if(mouseListenerIsActive) {
                     addScore();
                     minFly();
+                    addCombo();
                 }
                 mouseListenerIsActive=false;
 //                isContinue=false;  //測試中
@@ -67,12 +84,14 @@ public class bugs extends JLabel implements Runnable {
             }
         });
     }
+
     public void run(){
 
             t1 = new Timer(rand.nextInt(500 + 50), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 //                    while (isContinue == true) {
+
                         if (bugs.this.heiFlag){
                             if((y-10)>0){
                                 y-=10;
@@ -150,6 +169,10 @@ public class bugs extends JLabel implements Runnable {
 
     public void minFly(){
         mf.setfly(mf.getfly()-1);
+    }
+
+    public void addCombo(){
+        mf.setCombo(mf.getCombo()+1);
     }
 //    public int getScore(){
 //        return score;

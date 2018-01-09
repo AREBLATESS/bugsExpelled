@@ -19,6 +19,7 @@ public class MainFrame extends JFrame {
     private JPanel jpn1 = new JPanel();
     private JButton jbtnFulscreen =new JButton("全銀幕");
     private int score =0;
+    public int combo = 0;
     private JLabel jlabPoint = new JLabel(Integer.toString(score));
     String data[]={"蚊種圖鑑","積分欄列","特殊成就","開發名單"};
     private JComboBox jcb = new JComboBox(data);
@@ -26,6 +27,7 @@ public class MainFrame extends JFrame {
     private JPanel jpn2 = new JPanel();
     private JLabel jlabCeil = new JLabel("");
 //    private JLabel jlabHouse = new JLabel();
+
     private ImagePanel jlabHouse = new ImagePanel();
 
     private JPanel jpn3=new JPanel(new GridLayout(1,5,3,3));
@@ -35,11 +37,11 @@ public class MainFrame extends JFrame {
     private JButton jbtnCatch = new JButton("");
 
 
-    private JButton jbtnFire = new JButton("");
+    private JButton jbtnFire = new JButton("3");
     private JButton jbtnfun4 = new JButton("4");
     public int flyList=0;
     public int fly =0;
-    private JButton jbtnfun5 = new JButton("5");
+    private JButton jbtnfun5 = new JButton("");
     private Boolean tool =new Boolean(false);
     private int flag=0;
     private bugs selectedBug;
@@ -48,12 +50,30 @@ public class MainFrame extends JFrame {
     TimerTask task = new TimerTask() {
         @Override
         public void run() {
-            bugsList.add(new   bugs(MainFrame.this,imgH+200,imgW,MainFrame.this));
-            jlabHouse.add(bugsList.get(bugsList.size()-1));
-            threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
-            threadList.get(threadList.size()-1).start();
-            flyList ++;
-            fly++;
+            if (fly<=10){
+                bugsList.add(new   bugs(MainFrame.this,imgH+200,imgW,MainFrame.this));
+                jlabHouse.add(bugsList.get(bugsList.size()-1));
+                threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
+                threadList.get(threadList.size()-1).start();
+                flyList ++;
+                fly++;
+                if(combo >5){ jbtnfun5.setEnabled(true); }else{jbtnfun5.setEnabled(false);}
+                System.out.println(fly);
+                System.out.println("flyList:"+flyList);
+                System.out.println(combo);
+            }else{
+                JOptionPane.showMessageDialog(null,"you lose");
+                for(int i=1;i<flyList+1;i++){
+                    jlabHouse.remove(bugsList.get(bugsList.size()-i));
+                    threadList.remove(new Thread(bugsList.get(bugsList.size()-i)));
+                    jlabHouse.repaint();
+                }
+                flyList=0;
+                fly=0;
+                score = 0;
+                combo = 0;
+                jlabPoint.setText("0");
+            }
         }
     };
 
@@ -92,6 +112,7 @@ public class MainFrame extends JFrame {
     }
     private void initComp(){
         //
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         imgW = jlabHouse.getImgWidth();
         imgH = jlabHouse.getImgHeight();
         this.setBounds(350,100,imgW,imgH);
@@ -99,7 +120,21 @@ public class MainFrame extends JFrame {
         jlabHouse.setLayout(null);
 
 
-        tMain.schedule(task,1000,8000);
+            tMain.schedule(task,3000,1000);
+
+        if(combo==10){
+            for(int i=1;i<flyList+1;i++){
+                jlabHouse.remove(bugsList.get(bugsList.size()-i));
+                threadList.remove(new Thread(bugsList.get(bugsList.size()-i)));
+                jlabHouse.repaint();
+
+            }
+            System.out.println(combo);
+            flyList=0;
+            fly=0;
+            combo=0;
+        }
+
 
 
         jbtnfun4.addActionListener(new ActionListener() {
@@ -121,6 +156,9 @@ public class MainFrame extends JFrame {
                     }
                     flyList=0;
                     fly=0;
+                    score = 0;
+                    combo = 0;
+                    jlabPoint.setText("0");
                 }
             }
         });
@@ -210,12 +248,7 @@ public class MainFrame extends JFrame {
             }
         });
         //火燒
-        ImageIcon iconfire = new ImageIcon("graphic/fire.png");
-        Image imgT3;
-        imgT3=iconfire.getImage();
-        imgT3=imgT3.getScaledInstance(100,150,Image.SCALE_DEFAULT);
-        iconfire=new ImageIcon(imgT3);
-        jbtnFire.setIcon(iconfire);
+
         jbtnFire.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent fire) {
@@ -230,23 +263,38 @@ public class MainFrame extends JFrame {
             }
         });
         //測試
+        ImageIcon iconfire = new ImageIcon("graphic/fire.png");
+        Image imgT3;
+        imgT3=iconfire.getImage();
+        imgT3=imgT3.getScaledInstance(100,150,Image.SCALE_DEFAULT);
+        iconfire=new ImageIcon(imgT3);
+        jbtnfun5.setIcon(iconfire);
         jbtnfun5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+//                setImage("graphic/enddddddd.png");
+//                if(score >5) {
+//                    jlabHouse.add(new ImageIcon("enddddddd.png"));
+//                }
                 for(int i=1;i<flyList+1;i++){
                     jlabHouse.remove(bugsList.get(bugsList.size()-i));
                     threadList.remove(new Thread(bugsList.get(bugsList.size()-i)));
                     jlabHouse.repaint();
-
                 }
+
                 flyList=0;
                 fly=0;
+                combo=0;
             }
+
+
         });
+
 
         jpn3.add(jbtnFire);
         jpn3.add(jbtnfun4);
         jpn3.add(jbtnfun5);
+        jbtnfun5.setEnabled(false);
         cp.add(jpn3,BorderLayout.SOUTH);
 
 
@@ -360,9 +408,14 @@ public class MainFrame extends JFrame {
         private int imgW,imgH;
         public ImagePanel(){
             try{
-                image = ImageIO.read(new File("graphic/house.png"));
+//                if(score==0){
+//                    image = ImageIO.read(new File("graphic/enddddddd.png"));
+//                }else {
+                    image = ImageIO.read(new File("graphic/house.png"));
+//                }
                 imgW=image.getWidth();
                 imgH=image.getHeight();
+
             }catch (IOException ex){
                 javax.swing.JOptionPane.showMessageDialog(this,"IOException:"+ex.toString());
             }
@@ -392,7 +445,17 @@ public class MainFrame extends JFrame {
     public int getfly(){ return fly;}
     public void setfly(int fly1){this.fly=fly1;}
 
+    public int getCombo(){return combo;}
+    public void setCombo(int combo1){this.combo = combo1; }
+
     public JLabel getJlbPoint(){
         return jlabPoint;
     }
+//    public void setImage(String path){
+//        try {
+//            BufferedImage image = ImageIO.read(new File(path));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
