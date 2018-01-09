@@ -17,11 +17,11 @@ public class MainFrame extends JFrame {
 //    private bugs b = new bugs();
 
     private JPanel jpn1 = new JPanel();
-    private JButton jbtnFulscreen =new JButton("全銀幕");
+    private JButton jbtn1 =new JButton("圖鑑");
     private int score =0;
     private JLabel jlabPoint = new JLabel(Integer.toString(score));
-    String data[]={"蚊種圖鑑","積分欄列","特殊成就","開發名單"};
-    private JComboBox jcb = new JComboBox(data);
+//    String data[]={"蚊種圖鑑","積分欄列","特殊成就","開發名單"};
+//    private JComboBox jcb = new JComboBox(data);
 
     private JPanel jpn2 = new JPanel();
     private JLabel jlabCeil = new JLabel("");
@@ -98,9 +98,18 @@ public class MainFrame extends JFrame {
         this.setResizable(false);  //視窗放大縮小
         jlabHouse.setLayout(null);
 
-
-        tMain.schedule(task,1000,8000);
-
+        if(fly<=10) {
+            tMain.schedule(task, 1000, 1000);
+        }else{
+            JOptionPane.showMessageDialog(null,"you lose");
+            for(int i=1;i<flyList+1;i++){
+                jlabHouse.remove(bugsList.get(bugsList.size()-i));
+                threadList.remove(new Thread(bugsList.get(bugsList.size()-i)));
+                jlabHouse.repaint();
+            }
+            flyList=0;
+            fly=0;
+        }
 
         jbtnfun4.addActionListener(new ActionListener() {
             @Override
@@ -128,7 +137,7 @@ public class MainFrame extends JFrame {
         cp=this.getContentPane();
         cp.setLayout(new BorderLayout());
         this.setTitle("滅蚊行動");
-        jpn1.add(jbtnFulscreen);
+//        jpn1.add(jbtnFulscreen);
 
         jlabPoint.setOpaque(true);
         jlabPoint.setBackground(new Color(184,200, 76));
@@ -137,8 +146,9 @@ public class MainFrame extends JFrame {
 //        jlabPoint.setText(Integer.toString(new bugs(MainFrame.this,imgH+200,imgW).getScore()));
 
         jpn1.add(jlabPoint);
-        jpn1.add(jcb);
+        jpn1.add(jbtn1);
         cp.add(jpn1,BorderLayout.NORTH);
+//
 
         jpn2.setLayout(new BorderLayout());
 
@@ -249,7 +259,14 @@ public class MainFrame extends JFrame {
         jpn3.add(jbtnfun5);
         cp.add(jpn3,BorderLayout.SOUTH);
 
-
+        jbtn1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Illustrated illustrated = new Illustrated();
+                illustrated.setVisible(true);
+                MainFrame.this.setVisible(false);
+            }
+        });
 //        maintime= new Timer(8000, new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
