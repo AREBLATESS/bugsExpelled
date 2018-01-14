@@ -240,6 +240,7 @@ public class bugs extends JLabel implements Runnable {
 
     public void setSleep(){
         try {
+
             ImageIcon imgB =new ImageIcon("graphic/blood.png");
             bugs.this.setIcon(imgB);
 

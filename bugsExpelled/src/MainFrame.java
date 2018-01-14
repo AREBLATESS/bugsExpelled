@@ -1,5 +1,3 @@
-import org.w3c.dom.css.RGBColor;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -7,16 +5,26 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.TimerTask;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 
 public class MainFrame extends JFrame {
+    //音樂播放器
+
+//    Player player;
+//    File music = new File("../JLayer/BGM.mp3");
+    //
     private Container cp;
 //    private bugs b = new bugs();
 
     private JPanel jpn1 = new JPanel();
+//    private JButton jbtnMusic = new JButton("音樂");
     private JButton jbtn1 =new JButton("圖鑑");
     private int score =0;
     public int combo = 0;
@@ -46,13 +54,14 @@ public class MainFrame extends JFrame {
     private int flag=0;
     private bugs selectedBug;
     private boolean selectedBugFlag = false;
+    private boolean musicstart = false;
     public  boolean chArt = true;
     java.util.Timer tMain = new java.util.Timer(true);
     TimerTask task = new TimerTask() {
         @Override
         public void run() {
 //            if (chArt == true) {
-                if (fly <= 10) {
+            if (fly <= 10) {
                     bugsList.add(new bugs(MainFrame.this, imgH + 200, imgW, MainFrame.this));
                     jlabHouse.add(bugsList.get(bugsList.size() - 1));
                     threadList.add(new Thread(bugsList.get(bugsList.size() - 1)));
@@ -81,6 +90,7 @@ public class MainFrame extends JFrame {
                     combo = 0;
                     jlabPoint.setText("0");
                 }
+
             }
 //        }
     };
@@ -101,12 +111,19 @@ public class MainFrame extends JFrame {
     private ArrayList<bugs> bugsList=new ArrayList<bugs>();
     private ArrayList<Thread> threadList=new ArrayList<Thread>();
 
+//    public AudioPlayer(File file){
+//        this.music=file;
+//    }
+
+
 
     public MainFrame(){
         initComp();
     }
-    private void initComp(){
+    private void initComp() {
         //
+
+//        new Player(new BufferedInputStream(new FileInputStream(new File("../JLayer/BGM.mp3"))));
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         imgW = jlabHouse.getImgWidth();
         imgH = jlabHouse.getImgHeight();
@@ -179,6 +196,25 @@ public class MainFrame extends JFrame {
         jlabPoint.setBackground(new Color(184,200, 76));
         jlabPoint.setPreferredSize(new Dimension(400,30));
 
+//        jpn1.add(jbtnMusic);
+//        jbtnMusic.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                if(musicstart ==false){
+//                    try {
+//                        FileInputStream fis = new FileInputStream("C:\\Users\\user\\Documents\\GitHub\\bugsExpelled\\bugsExpelled\\JLayer\\BGM.mp3");
+//                        BufferedInputStream bis = new BufferedInputStream(fis);
+//                        Player playerMp3 = new Player(bis);
+//                        playerMp3.play();
+//
+//                    } catch (Exception music)
+//                    {
+//                        System.out.print(music);
+//                    }
+//                    musicstart = true;
+//                }
+//            }
+//        });
         jpn1.add(jlabPoint);
         jpn1.add(jbtn1);
         cp.add(jpn1,BorderLayout.NORTH);
@@ -381,4 +417,10 @@ public class MainFrame extends JFrame {
         return jlabPoint;
     }
 
+//    public void play() throws  FileNotFoundException, JavaLayerException{
+//
+//        BufferedInputStream buffer = new BufferedInputStream(new FileInputStream(music));
+//        player = new Player(buffer);
+//        player.play();
+//    }
 }
