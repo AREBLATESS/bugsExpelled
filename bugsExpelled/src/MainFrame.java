@@ -17,12 +17,12 @@ public class MainFrame extends JFrame {
 //    private bugs b = new bugs();
 
     private JPanel jpn1 = new JPanel();
-    private JButton jbtnFulscreen =new JButton("全銀幕");
+    private JButton jbtn1 =new JButton("圖鑑");
     private int score =0;
     public int combo = 0;
     private JLabel jlabPoint = new JLabel(Integer.toString(score));
-    String data[]={"蚊種圖鑑","積分欄列","特殊成就","開發名單"};
-    private JComboBox jcb = new JComboBox(data);
+//    String data[]={"蚊種圖鑑","積分欄列","特殊成就","開發名單"};
+//    private JComboBox jcb = new JComboBox(data);
 
     private JPanel jpn2 = new JPanel();
     private JLabel jlabCeil = new JLabel("");
@@ -81,30 +81,7 @@ public class MainFrame extends JFrame {
     private int  imgW, imgH;
     private int bugsIndex = 0;
     private ArrayList<bugs> bugsList=new ArrayList<bugs>();
-//    private ArrayList<bugs2> bugsList2=new ArrayList<bugs2>();
     private ArrayList<Thread> threadList=new ArrayList<Thread>();
-//    private Timer maintime;
-
-//    public MainFrame(){
-
-//
-////        //
-////        bugsList.add(new   bugs(imgH,imgW));
-////        jlabHouse.add(bugsList.get(bugsList.size()-1));
-////        threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
-////        threadList.get(threadList.size()-1).start();
-////        //
-//    }
-
-
-//    public void mousePressed(MouseEvent e){
-//        //實做滑鼠的點擊事件
-//        Graphics g = getGraphics();
-//        int x = e.getX();
-//        int y = e.getY();
-//        bugs.setIcon(imgeB);
-//        g.drawImage("graphic/blood.png",x,y,null);
-//    }
 
 
     public MainFrame(){
@@ -119,14 +96,22 @@ public class MainFrame extends JFrame {
         this.setResizable(false);  //視窗放大縮小
         jlabHouse.setLayout(null);
 
-
-            tMain.schedule(task,3000,1000);
-
-        if(combo==10){
+//<<<<<<< HEAD
+//
+//            tMain.schedule(task,3000,1000);
+//
+//        if(combo==10){
+//=======
+        if(fly<=10) {
+            tMain.schedule(task, 1000, 1000);
+        }else{
+            JOptionPane.showMessageDialog(null,"you lose");
+//>>>>>>> origin/master
             for(int i=1;i<flyList+1;i++){
                 jlabHouse.remove(bugsList.get(bugsList.size()-i));
                 threadList.remove(new Thread(bugsList.get(bugsList.size()-i)));
                 jlabHouse.repaint();
+//<<<<<<< HEAD
 
             }
             System.out.println(combo);
@@ -136,6 +121,12 @@ public class MainFrame extends JFrame {
         }
 
 
+//=======
+//            }
+//            flyList=0;
+//            fly=0;
+//        }
+//>>>>>>> origin/master
 
         jbtnfun4.addActionListener(new ActionListener() {
             @Override
@@ -166,16 +157,13 @@ public class MainFrame extends JFrame {
         cp=this.getContentPane();
         cp.setLayout(new BorderLayout());
         this.setTitle("滅蚊行動");
-        jpn1.add(jbtnFulscreen);
 
         jlabPoint.setOpaque(true);
         jlabPoint.setBackground(new Color(184,200, 76));
         jlabPoint.setPreferredSize(new Dimension(400,30));
 
-//        jlabPoint.setText(Integer.toString(new bugs(MainFrame.this,imgH+200,imgW).getScore()));
-
         jpn1.add(jlabPoint);
-        jpn1.add(jcb);
+        jpn1.add(jbtn1);
         cp.add(jpn1,BorderLayout.NORTH);
 
         jpn2.setLayout(new BorderLayout());
@@ -259,7 +247,6 @@ public class MainFrame extends JFrame {
                 threadList.remove(new Thread(bugsList.get(bugsList.size()-1)));
                 jlabHouse.repaint();
 
-//                selectedBug.setFreeze();
             }
         });
         //測試
@@ -297,20 +284,15 @@ public class MainFrame extends JFrame {
         jbtnfun5.setEnabled(false);
         cp.add(jpn3,BorderLayout.SOUTH);
 
+        jbtn1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Illustrated illustrated = new Illustrated();
+                illustrated.setVisible(true);
+                MainFrame.this.setVisible(false);
+            }
+        });
 
-//        maintime= new Timer(8000, new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                bugsList.add(new   bugs(imgH,imgW));
-//                jlabHouse.add(bugsList.get(bugsList.size()-1));
-//                threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
-//                threadList.get(threadList.size()-1).start();
-////                maintime.start();
-//            }
-//        });
-        //
-
-//        ///
 //        jlabHouse.addMouseListener(new MouseAdapter() {
 //            @Override
 //            public void mouseClicked(MouseEvent e) {
@@ -328,77 +310,6 @@ public class MainFrame extends JFrame {
 //            }
 //        });
         ///
-
-
-
-//        ImageIcon iconHouse = new ImageIcon("graphic/house.jpg");
-//        Image imgH;
-//        imgH = iconHouse.getImage();
-//        imgH = imgH.getScaledInstance(600,700,Image.SCALE_DEFAULT);
-//        iconHouse = new ImageIcon(imgH);
-//        jlabHouse.setIcon(iconHouse);
-//        jlabHouse.setOpaque(true);
-//        jlabHouse.setBackground(Color.YELLOW);
-//        jlabHouse.setHorizontalAlignment(jlabHouse.CENTER);
-////測試中
-//        jlabHouse.addMouseListener(new MouseListener() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-////                if(selectedBugFlag){
-//                    ImageIcon imgB =new ImageIcon("graphic/blood.png");
-////                    bugs.this.setSleep();
-//                    threadList.remove(this);
-//                    selectedBugFlag = false;
-////                }
-//            }
-//
-//            @Override
-//            public void mousePressed(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mouseReleased(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mouseEntered(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mouseExited(MouseEvent e) {
-//
-//            }
-//        });
-//        jlabHouse.addMouseListener(new MouseListener() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                selectedBug.setSleep();
-//                selectedBugFlag = false;
-//            }
-//
-//            @Override
-//            public void mousePressed(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mouseReleased(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mouseEntered(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mouseExited(MouseEvent e) {
-//
-//            }
-//        });
 
     }
 
@@ -451,11 +362,5 @@ public class MainFrame extends JFrame {
     public JLabel getJlbPoint(){
         return jlabPoint;
     }
-//    public void setImage(String path){
-//        try {
-//            BufferedImage image = ImageIO.read(new File(path));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+
 }
