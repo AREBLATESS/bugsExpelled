@@ -1,5 +1,9 @@
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.Random;
 
 
@@ -51,6 +55,23 @@ public class bugs extends JLabel implements Runnable {
             }
             this.setIcon(imgIcon[r][r1 = rand.nextInt(3)]);
         }
+//        else if (mf.getScore()>30){
+//            if(mf.getScore()==31){
+//                JOptionPane.showMessageDialog(null,"You win , you are the pro of killing mosqitos");
+//                mf.setScore(mf.getScore()+1);
+//                bugs.this.setFreeze();
+//                try {
+//                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("BGM2.wav"));
+//                    Clip clip = AudioSystem.getClip();
+//                    clip.open(inputStream);
+//                    clip.loop(Clip.LOOP_CONTINUOUSLY);
+//                    Thread.sleep(10000);
+//                }
+//                catch (Exception music){
+//                    System.out.print(music);
+//                }
+//            }
+//        }
         this.setBounds(x,y,this.getIcon().getIconWidth(),this.getIcon().getIconHeight());
         this.addMouseListener(new MouseListener() {
             @Override
@@ -73,8 +94,9 @@ public class bugs extends JLabel implements Runnable {
                 super.mouseClicked(e);
 //                ImageIcon imgB =new ImageIcon("graphic/blood.png");
 //                bugs.this.setIcon(imgB);
-                bugs.this.setSleep();
+
                 if(mouseListenerIsActive) {
+                    bugs.this.setSleep();
                     addScore();
                     minFly();
                     addCombo();
@@ -243,7 +265,17 @@ public class bugs extends JLabel implements Runnable {
 
             ImageIcon imgB =new ImageIcon("graphic/blood.png");
             bugs.this.setIcon(imgB);
-
+            try {
+                AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("bugsdown.wav"));
+                Clip clip = AudioSystem.getClip();
+                clip.open(inputStream);
+                clip.loop(0);
+                clip.start();
+//                Thread.sleep(10000);
+            }
+            catch (Exception music){
+                System.out.print(music);
+            }
 
             Thread.sleep(10);
 

@@ -15,14 +15,8 @@ import java.io.FileNotFoundException;
 
 
 public class MainFrame extends JFrame {
-    //音樂播放器
-
-//    Player player;
-//    File music = new File("../JLayer/BGM.mp3");
-    //
     private Container cp;
 //    private bugs b = new bugs();
-
     private JPanel jpn1 = new JPanel();
 //    private JButton jbtnMusic = new JButton("音樂");
     private JButton jbtn1 =new JButton("圖鑑");
@@ -37,7 +31,7 @@ public class MainFrame extends JFrame {
 //    private JLabel jlabHouse = new JLabel();
 
     private ImagePanel jlabHouse = new ImagePanel();
-
+    private JLabel jlabEnding = new JLabel();
     private JPanel jpn3=new JPanel(new GridLayout(1,5,3,3));
     private JButton jbtnClap =new JButton("");
 
@@ -76,7 +70,7 @@ public class MainFrame extends JFrame {
                     System.out.println("蚊子數量:"+fly);
                     System.out.println("flyList:" + flyList);
                     System.out.println("連擊:"+combo);
-                    System.out.println(chArt);
+//                    System.out.println(chArt);
                 } else {
                     JOptionPane.showMessageDialog(null, "you lose");
                     for (int i = 1; i < flyList + 1; i++) {
@@ -94,16 +88,6 @@ public class MainFrame extends JFrame {
             }
 //        }
     };
-
-//    TimerTask sleep = new TimerTask() {
-//        @Override
-//        public void run() {
-//            try {
-//                Thread.sleep(1000);
-//            }catch (Exception a){
-//            }
-//        }
-//    };
 
 
     private int  imgW, imgH;
@@ -131,36 +115,20 @@ public class MainFrame extends JFrame {
         this.setResizable(false);  //視窗放大縮小
         jlabHouse.setLayout(null);
 
-//<<<<<<< HEAD
-//
-//            tMain.schedule(task,3000,1000);
-//
-//        if(combo==10){
-//=======
         if(fly<=10) {
             tMain.schedule(task, 1000, 1000);
         }else{
             JOptionPane.showMessageDialog(null,"you lose");
-//>>>>>>> origin/master
             for(int i=1;i<flyList+1;i++){
                 jlabHouse.remove(bugsList.get(bugsList.size()-i));
                 threadList.remove(new Thread(bugsList.get(bugsList.size()-i)));
                 jlabHouse.repaint();
-//<<<<<<< HEAD
-
             }
             flyList=0;
             fly=0;
             combo=0;
         }
 
-
-//=======
-//            }
-//            flyList=0;
-//            fly=0;
-//        }
-//>>>>>>> origin/master
 
         jbtnfun4.addActionListener(new ActionListener() {
             @Override
@@ -196,25 +164,6 @@ public class MainFrame extends JFrame {
         jlabPoint.setBackground(new Color(184,200, 76));
         jlabPoint.setPreferredSize(new Dimension(400,30));
 
-//        jpn1.add(jbtnMusic);
-//        jbtnMusic.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                if(musicstart ==false){
-//                    try {
-//                        FileInputStream fis = new FileInputStream("C:\\Users\\user\\Documents\\GitHub\\bugsExpelled\\bugsExpelled\\JLayer\\BGM.mp3");
-//                        BufferedInputStream bis = new BufferedInputStream(fis);
-//                        Player playerMp3 = new Player(bis);
-//                        playerMp3.play();
-//
-//                    } catch (Exception music)
-//                    {
-//                        System.out.print(music);
-//                    }
-//                    musicstart = true;
-//                }
-//            }
-//        });
         jpn1.add(jlabPoint);
         jpn1.add(jbtn1);
         cp.add(jpn1,BorderLayout.NORTH);
@@ -293,10 +242,7 @@ public class MainFrame extends JFrame {
         jbtnFire.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent fire) {
-//                bugsList.remove(new   bugs(MainFrame.this,imgH+200,imgW));
                 jlabHouse.remove(bugsList.get(bugsList.size()-1));
-//                ImageIcon imgB =new ImageIcon("graphic/blood.png");
-//                bugsList.get(bugsList.size()-1).setIcon(imgB);
                 threadList.remove(new Thread(bugsList.get(bugsList.size()-1)));
                 jlabHouse.repaint();
 
@@ -312,21 +258,38 @@ public class MainFrame extends JFrame {
         jbtnfun5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                setImage("graphic/enddddddd.png");
-//                if(score >5) {
-//                    jlabHouse.add(new ImageIcon("enddddddd.png"));
-//                }
-                for(int i=1;i<flyList+1;i++){
-                    jlabHouse.remove(bugsList.get(bugsList.size()-i));
-                    threadList.remove(new Thread(bugsList.get(bugsList.size()-i)));
-                    jlabHouse.repaint();
+                if (score > 50) {
+                    ImageIcon iconExplosion = new ImageIcon("graphic/ending.png");
+                    Image imgE;
+                    imgE = iconExplosion.getImage();
+                    imgE = imgE.getScaledInstance(600, 1000, Image.SCALE_DEFAULT);
+                    iconExplosion = new ImageIcon(imgE);
+                    jlabEnding.setIcon(iconExplosion);
+                    jpn2.remove(jlabHouse);
+                    jpn2.remove(jlabCeil);
+                    jpn2.add(jlabEnding, BorderLayout.CENTER);
+                    JOptionPane.showMessageDialog(null, "Bad Ending, you explore your house");
+                    for (int i = 1; i < flyList + 1; i++) {
+                        jlabHouse.remove(bugsList.get(bugsList.size() - i));
+                        threadList.remove(new Thread(bugsList.get(bugsList.size() - i)));
+                        jlabHouse.repaint();
+                    }
+                    flyList = 0;
+                    fly = 0;
+                    combo = 0;
+                    score = 0;
+                    repaint();
+                } else {
+                    for (int i = 1; i < flyList + 1; i++) {
+                        jlabHouse.remove(bugsList.get(bugsList.size() - i));
+                        threadList.remove(new Thread(bugsList.get(bugsList.size() - i)));
+                        jlabHouse.repaint();
+                    }
+                    flyList = 0;
+                    fly = 0;
+                    combo = 0;
                 }
-
-                flyList=0;
-                fly=0;
-                combo=0;
             }
-
 
         });
 
