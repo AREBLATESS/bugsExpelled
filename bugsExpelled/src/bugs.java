@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.Random;
 
+
 public class bugs extends JLabel implements Runnable {
     private int frmW, frmH, x, y, r1 ,r ;
     private ImageIcon[][] imgIcon = {{new ImageIcon("graphic/f11.png"),
@@ -16,14 +17,20 @@ public class bugs extends JLabel implements Runnable {
     private Random rand = new Random();
     private MainFrame mf;
     private boolean mouseListenerIsActive = true;
+    Random rd = new Random();
+    private int flow = rd.nextInt(3)+1;
+
+
     public bugs(MainFrame frm,int frmH,int frmW,MainFrame mf){
+
         this.mf=mf;
         this.frm=frm;
         this.frmH =frmH;
         this.frmW= frmW;
         x=rand.nextInt(frmW-100);
-        y=rand.nextInt(frmH-100);
+        y=rand.nextInt(frmH-300);
         r=rand.nextInt(2);
+
         if(r==1){
             this.dirFrag= false;
         }
@@ -87,11 +94,11 @@ public class bugs extends JLabel implements Runnable {
 
     public void run(){
 
-            t1 = new Timer(rand.nextInt(500 + 50), new ActionListener() {
+            t1 = new Timer(rand.nextInt(100)+ 150, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 //                    while (isContinue == true) {
-
+                    if(flow==1){
                         if (bugs.this.heiFlag){
                             if((y-10)>0){
                                 y-=10;
@@ -100,8 +107,8 @@ public class bugs extends JLabel implements Runnable {
                                 y+=10;
                             }
                             bugs.this.setLocation(x,y);
-                        } else{
-                            if(y + bugs.this.getIcon().getIconHeight()+20<frmH){
+                        }else{
+                            if(y + bugs.this.getIcon().getIconHeight()+200<frmH){
                                 y+=10;
                             }else{
                                 bugs.this.heiFlag = !bugs.this.heiFlag;
@@ -133,6 +140,89 @@ public class bugs extends JLabel implements Runnable {
                         }
 //                        isContinue =true;
 //                    }
+                        //flow1/////////////
+                    }else if(flow==2){
+                        if (bugs.this.heiFlag){
+                            if((y-10)>0){
+                                y-=10;
+                            }else{
+                                bugs.this.heiFlag =!bugs.this.heiFlag;
+                                y+=10;
+                            }
+                            bugs.this.setLocation(x,y);
+                        }else{
+                            if(y + bugs.this.getIcon().getIconHeight()+200<frmH){
+                                y+=10;
+                            }else{
+                                bugs.this.heiFlag = !bugs.this.heiFlag;
+                                y -= 10;
+                            }
+                            bugs.this.setLocation(x,y);
+                        }
+                        //~~~~~~~~//
+                        if (bugs.this.dirFrag) {
+                            if ((x - 30) > 0) {
+                                x -= 30;
+                            } else {
+                                bugs.this.dirFrag = !bugs.this.dirFrag;
+                                r = 1;
+                                bugs.this.setIcon(imgIcon[r][r1]);
+                                x += 30;
+                            }
+                            bugs.this.setLocation(x, y);
+                        } else {
+                            if ((x + bugs.this.getIcon().getIconWidth() + 30 < frmW)) {
+                                x += 30;
+                            } else {
+                                bugs.this.dirFrag = !bugs.this.dirFrag;
+                                r = 0;
+                                bugs.this.setIcon(imgIcon[r][r1]);
+                                x -= 30;
+                            }
+                            bugs.this.setLocation(x, y);
+                        }
+                        //flow2////////
+                    }else if(flow==3){
+                        if (bugs.this.heiFlag){
+                            if((y-30)>0){
+                                y-=30;
+                            }else{
+                                bugs.this.heiFlag =!bugs.this.heiFlag;
+                                y+=30;
+                            }
+                            bugs.this.setLocation(x,y);
+                        }else{
+                            if(y + bugs.this.getIcon().getIconHeight()+200<frmH){
+                                y+=30;
+                            }else{
+                                bugs.this.heiFlag = !bugs.this.heiFlag;
+                                y -= 30;
+                            }
+                            bugs.this.setLocation(x,y);
+                        }
+                        //~~~~~~~~//
+                        if (bugs.this.dirFrag) {
+                            if ((x - 10) > 0) {
+                                x -= 10;
+                            } else {
+                                bugs.this.dirFrag = !bugs.this.dirFrag;
+                                r = 1;
+                                bugs.this.setIcon(imgIcon[r][r1]);
+                                x += 10;
+                            }
+                            bugs.this.setLocation(x, y);
+                        } else {
+                            if ((x + bugs.this.getIcon().getIconWidth() + 30 < frmW)) {
+                                x += 10;
+                            } else {
+                                bugs.this.dirFrag = !bugs.this.dirFrag;
+                                r = 0;
+                                bugs.this.setIcon(imgIcon[r][r1]);
+                                x -= 10;
+                            }
+                            bugs.this.setLocation(x, y);
+                        }
+                    }
                     }
 
             });
@@ -174,11 +264,5 @@ public class bugs extends JLabel implements Runnable {
     public void addCombo(){
         mf.setCombo(mf.getCombo()+1);
     }
-//    public int getScore(){
-//        return score;
-//    }
-//    public void stopMouseListner () {
-//        mouseListenerIsActive = false;
-//    }
 }
 

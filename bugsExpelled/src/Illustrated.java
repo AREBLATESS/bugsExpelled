@@ -8,6 +8,7 @@ public class Illustrated extends JFrame{
 
     private Container cp;
 
+
     private JLabel lb1 = new JLabel("");
     public Illustrated(){
         initComp();
@@ -17,12 +18,12 @@ public class Illustrated extends JFrame{
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                MainFrame mram = new MainFrame();
-                mram.setVisible(true);
+//                MainFrame mram = new MainFrame();
+//                mram.chArt=false;
                 Illustrated.this.setVisible(false);
+
             }
         });
-
 
 
         cp=this.getContentPane();

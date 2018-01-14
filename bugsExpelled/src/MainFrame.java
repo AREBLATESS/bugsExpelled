@@ -46,36 +46,54 @@ public class MainFrame extends JFrame {
     private int flag=0;
     private bugs selectedBug;
     private boolean selectedBugFlag = false;
+    public  boolean chArt = true;
     java.util.Timer tMain = new java.util.Timer(true);
     TimerTask task = new TimerTask() {
         @Override
         public void run() {
-            if (fly<=10){
-                bugsList.add(new   bugs(MainFrame.this,imgH+200,imgW,MainFrame.this));
-                jlabHouse.add(bugsList.get(bugsList.size()-1));
-                threadList.add(new Thread(bugsList.get(bugsList.size()-1)));
-                threadList.get(threadList.size()-1).start();
-                flyList ++;
-                fly++;
-                if(combo >5){ jbtnfun5.setEnabled(true); }else{jbtnfun5.setEnabled(false);}
-                System.out.println(fly);
-                System.out.println("flyList:"+flyList);
-                System.out.println(combo);
-            }else{
-                JOptionPane.showMessageDialog(null,"you lose");
-                for(int i=1;i<flyList+1;i++){
-                    jlabHouse.remove(bugsList.get(bugsList.size()-i));
-                    threadList.remove(new Thread(bugsList.get(bugsList.size()-i)));
-                    jlabHouse.repaint();
+//            if (chArt == true) {
+                if (fly <= 10) {
+                    bugsList.add(new bugs(MainFrame.this, imgH + 200, imgW, MainFrame.this));
+                    jlabHouse.add(bugsList.get(bugsList.size() - 1));
+                    threadList.add(new Thread(bugsList.get(bugsList.size() - 1)));
+                    threadList.get(threadList.size() - 1).start();
+                    flyList++;
+                    fly++;
+                    if (combo > 5) {
+                        jbtnfun5.setEnabled(true);
+                    } else {
+                        jbtnfun5.setEnabled(false);
+                    }
+                    System.out.println("蚊子數量:"+fly);
+                    System.out.println("flyList:" + flyList);
+                    System.out.println("連擊:"+combo);
+                    System.out.println(chArt);
+                } else {
+                    JOptionPane.showMessageDialog(null, "you lose");
+                    for (int i = 1; i < flyList + 1; i++) {
+                        jlabHouse.remove(bugsList.get(bugsList.size() - i));
+                        threadList.remove(new Thread(bugsList.get(bugsList.size() - i)));
+                        jlabHouse.repaint();
+                    }
+                    flyList = 0;
+                    fly = 0;
+                    score = 0;
+                    combo = 0;
+                    jlabPoint.setText("0");
                 }
-                flyList=0;
-                fly=0;
-                score = 0;
-                combo = 0;
-                jlabPoint.setText("0");
             }
-        }
+//        }
     };
+
+//    TimerTask sleep = new TimerTask() {
+//        @Override
+//        public void run() {
+//            try {
+//                Thread.sleep(1000);
+//            }catch (Exception a){
+//            }
+//        }
+//    };
 
 
     private int  imgW, imgH;
@@ -114,7 +132,6 @@ public class MainFrame extends JFrame {
 //<<<<<<< HEAD
 
             }
-            System.out.println(combo);
             flyList=0;
             fly=0;
             combo=0;
@@ -289,7 +306,8 @@ public class MainFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Illustrated illustrated = new Illustrated();
                 illustrated.setVisible(true);
-                MainFrame.this.setVisible(false);
+//                MainFrame.this.setVisible(false);
+
             }
         });
 
